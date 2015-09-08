@@ -13,5 +13,8 @@ namespace CitadelsServer
     /// </summary>
     public partial class App : Application
     {
+        public static ServerNetControl serverNetControl;
+        public static ServerMySQLControl serverMySQLControl;
+        
     }
 }

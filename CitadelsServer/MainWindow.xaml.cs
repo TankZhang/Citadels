@@ -23,6 +23,7 @@ namespace CitadelsServer
         public MainWindow()
         {
             InitializeComponent();
+            App.serverMySQLControl = new ServerMySQLControl();
         }
     }
 }
