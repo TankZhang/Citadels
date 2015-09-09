@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CitadelsClient"
         mc:Ignorable="d"
-        Title="富饶之城服务器" Height="350" Width="525">
+        Title="富饶之城客户端" Height="350" Width="525">
     <Grid>
         
     </Grid>

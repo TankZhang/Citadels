@@ -69,10 +69,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ConverterIpToString.cs" />
     <Compile Include="GameUser.cs" />
+    <Compile Include="NotificationObject.cs" />
     <Compile Include="ServerDataControl.cs" />
+    <Compile Include="ServerIp.cs" />
     <Compile Include="ServerMySQLControl.cs" />
     <Compile Include="ServerNetControl.cs" />
+    <Compile Include="ServerViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

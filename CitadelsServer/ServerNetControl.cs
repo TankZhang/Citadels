@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace CitadelsServer
 {
-    public  class ServerNetControl
+    public class ServerNetControl
     {
-        private Socket _socketWatch;
         //生成服务器监听的socket
+        private Socket _socketWatch;
         public Socket SocketWatch
         {
             get
@@ -25,9 +25,8 @@ namespace CitadelsServer
                 _socketWatch = value;
             }
         }
-
-        private Dictionary<string, Socket> _dicSocket;
         //生成与每个客户交流的socket字典
+        private Dictionary<string, Socket> _dicSocket;
         public Dictionary<string, Socket> DicSocket
         {
             get
@@ -45,13 +44,12 @@ namespace CitadelsServer
         /// 返回本机IP
         /// </summary>
         /// <returns>本机的IP的数组</returns>
-        static IPAddress[] GetLocalIP()
+        public static IPAddress[] GetLocalIP()
         {
             string hostname = Dns.GetHostName();
             IPHostEntry localhost = Dns.GetHostEntry(hostname);
             return localhost.AddressList;
         }
-
         /// <summary>
         /// 监听socket开始监听
         /// </summary>
@@ -79,7 +77,10 @@ namespace CitadelsServer
                 }
             }
         }
-
+        /// <summary>
+        /// 接收信息
+        /// </summary>
+        /// <param name="o"></param>
         void Receive(object o)
         {
             Socket socketSend = o as Socket;
@@ -92,26 +93,61 @@ namespace CitadelsServer
                     int r = socketSend.Receive(buffer);
                     if (r == 0)
                     { break; }
-                    switch (buffer[0])
-                    {
-                        //将远程连接的客户端的别名和Socket存入集合中
-                        case 0:
-                            DicSocket.Add(Encoding.UTF8.GetString(buffer, 1, r - 1), socketSend);
-                            break;
-                        //收到你好时候的反应
-                        case 1:
-                            string str = Encoding.UTF8.GetString(buffer, 1, r - 1);
-                            Console.WriteLine("我收到" + str);
-                            //由于调用线程无法访问此对象,因为另一个线程拥有该对象，因此使用这个函数来调用UI对象
-                            break;
-                    }//switch结束
+                    string str = Encoding.UTF8.GetString(buffer, 0, r);
+                    Console.WriteLine(str);
+                    //switch (buffer[0])
+                    //{
+                    //    //将远程连接的客户端的别名和Socket存入集合中
+                    //    case 0:
+                    //        DicSocket.Add(Encoding.UTF8.GetString(buffer, 1, r - 1), socketSend);
+                    //        break;
+                    //    //收到你好时候的反应
+                    //    case 1:
+                    //        string str = Encoding.UTF8.GetString(buffer, 1, r - 1);
+                    //        Console.WriteLine("我收到" + str);
+                    //        //由于调用线程无法访问此对象,因为另一个线程拥有该对象，因此使用这个函数来调用UI对象
+                    //        break;
+                    //}//switch结束
                 }
                 catch (Exception ex)
                 {
                     //抛出异常信息
-                    Console.WriteLine(ex.Message.ToString()); 
+                    Console.WriteLine(ex.Message.ToString());
                 }
             }
+        }
+        /// <summary>
+        /// 发送消息
+        /// </summary>
+        /// <param name="socket"></param>
+        /// <param name="str"></param>
+        void Send(Socket socket, string str)
+        {
+            try
+            {
+                byte[] buffer = Encoding.UTF8.GetBytes(str);
+                socket.Send(buffer);
+            }
+            catch (Exception ex)
+            {
+                //抛出异常信息
+                Console.WriteLine(ex.Message.ToString());
+            }
+        }
+        //构造函数
+        public ServerNetControl()
+        { }
+        public ServerNetControl(string ipAddr,string port)
+        {
+            SocketWatch = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            IPAddress ip = IPAddress.Parse(ipAddr);
+            IPEndPoint point = new IPEndPoint(ip, Convert.ToInt32(port));
+            SocketWatch.Bind(point);
+            SocketWatch.Listen(10);
+            Thread th = new Thread(Listen);
+            th.IsBackground = true;
+            th.Start(SocketWatch);
+            Console.WriteLine("监听成功");
         }
     }
 }

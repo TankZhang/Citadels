@@ -12,8 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
-namespace CitadelsClient
+using CitadelsServer;
+namespace Test
 {
     /// <summary>
     /// MainWindow.xaml 的交互逻辑
@@ -23,7 +23,7 @@ namespace CitadelsClient
         public MainWindow()
         {
             InitializeComponent();
-            App.clientNetControl = new ClientNetControl("192.168.1.102", "31313");
+            this.DataContext = new ViewModel();
         }
     }
 }

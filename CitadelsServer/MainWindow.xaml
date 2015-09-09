@@ -5,8 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CitadelsServer"
         mc:Ignorable="d"
-        Title="CitadelsServer" Height="350" Width="525">
+        Title="富饶之城服务器" Height="350" Width="525">
     <Grid>
-        
+        <Grid Name="gridStartWin" Visibility="Visible">
+        <ComboBox Name="cmboxIP" ItemsSource="{Binding Ips}" Margin="200,55,107,236">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Ip,Converter={StaticResource ipToString}}"/>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        <TextBlock x:Name="textBlock" Text="选择服务器IP地址：" HorizontalAlignment="Left" Width="120" TextWrapping="Wrap" Margin="80,55,0,236"  />
+        <TextBlock Text="输入端口号：" Margin="80,101,317,198" Width="120" Height="20" ></TextBlock>
+        <TextBox x:Name="tbxPort" HorizontalAlignment="Left" Height="23" Margin="200,98,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="210"/>
+        <Button x:Name="btnStartServer" Content="启动服务器" HorizontalAlignment="Left" Margin="200,236,0,0" VerticalAlignment="Top" Width="75" Click="btnStartServer_Click"/>
+        </Grid>
+        <Grid Name="gridStartSuccess" Visibility="Collapsed">
+        <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Margin="169,129,0,0" TextWrapping="Wrap" Text="开启成功" VerticalAlignment="Top" Height="80" Width="164"/>
+        </Grid>
     </Grid>
 </Window>

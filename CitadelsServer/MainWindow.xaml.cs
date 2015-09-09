@@ -23,7 +23,15 @@ namespace CitadelsServer
         public MainWindow()
         {
             InitializeComponent();
-            App.serverMySQLControl = new ServerMySQLControl();
+            this.DataContext = App.serverViewModel;
+        }
+
+        private void btnStartServer_Click(object sender, RoutedEventArgs e)
+        {
+            ServerIp sip = cmboxIP.SelectedItem as ServerIp;
+            App.serverViewModel.serverNetControl = new ServerNetControl(sip.Ip.ToString(), tbxPort.Text);
+            gridStartSuccess.Visibility = Visibility.Visible;
+            gridStartWin.Visibility = Visibility.Collapsed;
         }
     }
 }

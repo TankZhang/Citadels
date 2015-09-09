@@ -13,5 +13,6 @@ namespace CitadelsClient
     /// </summary>
     public partial class App : Application
     {
+       public static ClientNetControl clientNetControl;
     }
 }
