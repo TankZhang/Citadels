@@ -57,21 +57,17 @@ namespace CitadelsServer
         /// <param name="pwd"></param>
         /// <param name="realName"></param>
         /// <returns></returns>
-        public string InsertToDb(string mail, string nickname, string pwd, string realName)
+        public bool InsertToDb(string mail, string nickname, string pwd, string realName)
         {
-            if(IsExistInDb(mail))
-            {
-                return "邮箱已存在";
-            }
             MySqlCmd.CommandText = String.Format("insert into GameUser(GameUser_Mail,GameUser_Nickname,GameUser_Pwd,GameUser_Name,GameUser_Exp) values('{0}','{1}','{2}','{3}',0)", mail, nickname, pwd, realName);
             MySqlCmd.Connection = MySqlConnection;
             if (MySqlCmd.ExecuteNonQuery() > 0)
             {
-                return "创建成功";
+                return true;
             }
             else
             {
-                return "创建失败";
+                return false;
             }
         }
         /// <summary>
@@ -94,7 +90,7 @@ namespace CitadelsServer
             {
                 if (reader.HasRows)
                 {
-                    gameUser = new GameUser(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4));
+                    gameUser = new GameUser(reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetString(5));
                 }
             }
             reader.Close();

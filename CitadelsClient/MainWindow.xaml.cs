@@ -25,5 +25,11 @@ namespace CitadelsClient
             InitializeComponent();
             App.clientNetControl = new ClientNetControl("192.168.1.102", "31313");
         }
+
+        private void btn_Click(object sender, RoutedEventArgs e)
+        {
+
+            App.clientNetControl.Send(tbxSend.Text);
+        }
     }
 }

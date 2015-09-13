@@ -39,6 +39,36 @@ namespace CitadelsServer
                 _dicSocket = value;
             }
         }
+        //生成房间号
+        private int _roomNum;
+        public int RoomNum
+        {
+            get
+            {
+                return _roomNum;
+            }
+
+            set
+            {
+                _roomNum = value;
+            }
+        }
+
+        //生成房间座位socket字典
+        private Dictionary<int, List<Socket>> _roomSeatSocket;
+        public Dictionary<int, List<Socket>> RoomSeatSocket
+        {
+            get
+            {
+                return _roomSeatSocket;
+            }
+
+            set
+            {
+                _roomSeatSocket = value;
+            }
+        }
+
 
         /// <summary>
         /// 返回本机IP
@@ -95,19 +125,36 @@ namespace CitadelsServer
                     { break; }
                     string str = Encoding.UTF8.GetString(buffer, 0, r);
                     Console.WriteLine(str);
-                    //switch (buffer[0])
-                    //{
-                    //    //将远程连接的客户端的别名和Socket存入集合中
-                    //    case 0:
-                    //        DicSocket.Add(Encoding.UTF8.GetString(buffer, 1, r - 1), socketSend);
-                    //        break;
-                    //    //收到你好时候的反应
-                    //    case 1:
-                    //        string str = Encoding.UTF8.GetString(buffer, 1, r - 1);
-                    //        Console.WriteLine("我收到" + str);
-                    //        //由于调用线程无法访问此对象,因为另一个线程拥有该对象，因此使用这个函数来调用UI对象
-                    //        break;
-                    //}//switch结束
+                    switch (str[0])
+                    {
+                        //处理登陆注册信息
+                        case '0':
+                            GameUser gameuser = ServerDataControl.InfoDataDeal(App.serverViewModel.serverMySQLControl, socketSend, str.Substring(1));
+                            if (gameuser != null)
+                            {
+                                DicSocket.Add(gameuser.Mail, socketSend);
+                                Console.WriteLine("登陆成功");
+                            }
+                            else
+                            {
+                                Send(socketSend, "9登陆失败");
+                            }
+                            break;
+                        //处理房间座位信息
+                        case '1':
+                            if (ServerDataControl.RoomDataDeal(ref _roomSeatSocket, ref _roomNum, socketSend, str.Substring(1)))
+                            {
+                                //返回给客户端自己的房间号和座位号
+                                Send(socketSend, "10"+ RoomNum.ToString() + "|"+RoomSeatSocket[RoomNum].Count.ToString());
+                                Console.WriteLine("创建房间成功");
+                            }
+                            else
+                            {
+                                Send(socketSend, "9创建房间失败");
+                            }
+                            break;
+                        default: Console.WriteLine("接收到错误信息"); break;
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -137,16 +184,19 @@ namespace CitadelsServer
         //构造函数
         public ServerNetControl()
         { }
-        public ServerNetControl(string ipAddr,string port)
+        public ServerNetControl(string ipAddr, string port)
         {
             SocketWatch = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             IPAddress ip = IPAddress.Parse(ipAddr);
             IPEndPoint point = new IPEndPoint(ip, Convert.ToInt32(port));
+            DicSocket = new Dictionary<string, Socket>();
+            RoomSeatSocket = new Dictionary<int, List<Socket>>();
             SocketWatch.Bind(point);
             SocketWatch.Listen(10);
             Thread th = new Thread(Listen);
             th.IsBackground = true;
             th.Start(SocketWatch);
+            RoomNum = 0;
             Console.WriteLine("监听成功");
         }
     }
