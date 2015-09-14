@@ -78,6 +78,20 @@ namespace CitadelsServer
             }
         }
 
+        private string _status;
+        public string Status
+        {
+            get
+            {
+                return _status;
+            }
+
+            set
+            {
+                _status = value;
+            }
+        }
+
         //构造函数
         public GameUser()
         { }

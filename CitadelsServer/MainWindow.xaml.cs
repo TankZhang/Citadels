@@ -24,13 +24,13 @@ namespace CitadelsServer
         public MainWindow()
         {
             InitializeComponent();
-            this.DataContext = App.serverViewModel;
+            this.DataContext = App.viewModel;
         }
 
         private void btnStartServer_Click(object sender, RoutedEventArgs e)
         {
             ServerIp sip = cmboxIP.SelectedItem as ServerIp;
-            App.serverViewModel.serverNetControl = new ServerNetControl(sip.Ip.ToString(), tbxPort.Text);
+            App.viewModel.netCtrl = new NetCtrl(sip.Ip.ToString(), tbxPort.Text);
             gridStartSuccess.Visibility = Visibility.Visible;
             gridStartWin.Visibility = Visibility.Collapsed;
         }

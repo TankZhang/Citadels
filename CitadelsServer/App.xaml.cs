@@ -13,6 +13,6 @@ namespace CitadelsServer
     /// </summary>
     public partial class App : Application
     {
-        public static ServerViewModel serverViewModel = new ServerViewModel();
+        public static ViewModel viewModel = new ViewModel();
     }
 }

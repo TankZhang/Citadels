@@ -6,10 +6,11 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using CitadelsServer.DataCtrls;
 
 namespace CitadelsServer
 {
-    public class ServerNetControl
+   public  class NetCtrl
     {
         //生成服务器监听的socket
         private Socket _socketWatch;
@@ -129,23 +130,15 @@ namespace CitadelsServer
                     {
                         //处理登陆注册信息
                         case '0':
-                            GameUser gameuser = ServerDataControl.InfoDataDeal(App.serverViewModel.serverMySQLControl, socketSend, str.Substring(1));
-                            if (gameuser != null)
-                            {
-                                DicSocket.Add(gameuser.Mail, socketSend);
-                                Console.WriteLine("登陆成功");
-                            }
-                            else
-                            {
-                                Send(socketSend, "9登陆失败");
-                            }
+                            GameUser gameuser = InfoDataCtrl.InfoDataDeal(App.viewModel.mySQLCtrl, socketSend, str.Substring(1));
+                            Console.WriteLine(gameuser.Status);
                             break;
                         //处理房间座位信息
                         case '1':
-                            if (ServerDataControl.RoomDataDeal(ref _roomSeatSocket, ref _roomNum, socketSend, str.Substring(1)))
+                            if (InfoDataCtrl.RoomDataDeal(ref _roomSeatSocket, ref _roomNum, socketSend, str.Substring(1)))
                             {
                                 //返回给客户端自己的房间号和座位号
-                                Send(socketSend, "10"+ RoomNum.ToString() + "|"+RoomSeatSocket[RoomNum].Count.ToString());
+                                Send(socketSend, "10" + RoomNum.ToString() + "|" + RoomSeatSocket[RoomNum].Count.ToString());
                                 Console.WriteLine("创建房间成功");
                             }
                             else
@@ -182,9 +175,9 @@ namespace CitadelsServer
             }
         }
         //构造函数
-        public ServerNetControl()
+        public NetCtrl()
         { }
-        public ServerNetControl(string ipAddr, string port)
+        public NetCtrl(string ipAddr, string port)
         {
             SocketWatch = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             IPAddress ip = IPAddress.Parse(ipAddr);

@@ -1,18 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace CitadelsServer
 {
-    public class ServerViewModel: NotificationObject
+    public class ViewModel: NotificationObject
     {
-
-        public ServerMySQLControl serverMySQLControl;
-        public ServerNetControl serverNetControl;
+        public MySQLCtrl mySQLCtrl;
+        public NetCtrl netCtrl;
         private List<ServerIp> _ips;
         public List<ServerIp> Ips
         {
@@ -27,13 +24,12 @@ namespace CitadelsServer
                 this.RaisePropertyChanged("Str");
             }
         }
-
-        public ServerViewModel()
+        public ViewModel()
         {
-            this.serverNetControl = new ServerNetControl();
-            this.serverMySQLControl = new ServerMySQLControl();
-            this.Ips = new List<ServerIp>();
-            foreach (var item in ServerNetControl.GetLocalIP())
+            netCtrl = new NetCtrl();
+            mySQLCtrl = new MySQLCtrl();
+            Ips = new List<ServerIp>();
+            foreach (var item in NetCtrl.GetLocalIP())
             {
                 if (!item.ToString().Contains("%"))
                 {
@@ -41,6 +37,5 @@ namespace CitadelsServer
                 }
             }
         }
-
     }
 }

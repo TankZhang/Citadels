@@ -7,15 +7,14 @@ using System.Threading.Tasks;
 
 namespace CitadelsServer
 {
-    public  class ServerMySQLControl
+    public class MySQLCtrl
     {
         //构造函数
-        public ServerMySQLControl()
+        public MySQLCtrl()
         {
             MySqlConnection = new MySqlConnection("server=localhost;User Id=GameServer;password=forever;Database=citadelsdb");
             MySqlConnection.Open();
         }
-
         private MySqlConnection _mySqlConnection;
         /// <summary>
         /// 生成Mysql连接属性
@@ -78,11 +77,6 @@ namespace CitadelsServer
         public GameUser SelecInDb(string mail)
         {
             GameUser gameUser = new GameUser();
-            if (!IsExistInDb(mail))
-            {
-                gameUser.Mail = "null";
-                return gameUser;
-            }
             MySqlCmd.CommandText = String.Format("select* from GameUser where GameUser_Mail='{0}'", mail);
             MySqlCmd.Connection = MySqlConnection;
             MySqlDataReader reader = MySqlCmd.ExecuteReader();
@@ -104,7 +98,7 @@ namespace CitadelsServer
         public bool IsExistInDb(string mail)
         {
             MySqlCmd = new MySqlCommand(String.Format("select count(*) from GameUser where GameUser_Mail='{0}'", mail), MySqlConnection);
-            if(Convert.ToInt32(MySqlCmd.ExecuteScalar())>0)
+            if (Convert.ToInt32(MySqlCmd.ExecuteScalar()) > 0)
             {
                 return true;
             }
