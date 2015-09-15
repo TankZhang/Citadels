@@ -25,7 +25,7 @@ namespace CitadelsServer
         }
         public ServerIp(IPAddress ip)
         {
-            this.Ip = ip;
+            Ip = ip;
         }
 
     }

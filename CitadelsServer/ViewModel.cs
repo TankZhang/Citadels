@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace CitadelsServer
 {
-    public class ViewModel: NotificationObject
+    public class ViewModel
     {
         public MySQLCtrl mySQLCtrl;
         public NetCtrl netCtrl;
-        private List<ServerIp> _ips;
-        public List<ServerIp> Ips
+        private ObservableCollection<ServerIp> _ips;
+        public ObservableCollection<ServerIp> Ips
         {
             get
             {
@@ -21,14 +22,13 @@ namespace CitadelsServer
             set
             {
                 _ips = value;
-                this.RaisePropertyChanged("Str");
             }
         }
         public ViewModel()
         {
             netCtrl = new NetCtrl();
             mySQLCtrl = new MySQLCtrl();
-            Ips = new List<ServerIp>();
+            Ips = new ObservableCollection<ServerIp>();
             foreach (var item in NetCtrl.GetLocalIP())
             {
                 if (!item.ToString().Contains("%"))
