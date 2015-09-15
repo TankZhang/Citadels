@@ -121,48 +121,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Heros\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Res\BuildingImages\building_Back.png" />
-    <Resource Include="Res\BuildingImages\militaryBuilding_Battlefield.png" />
-    <Resource Include="Res\BuildingImages\militaryBuilding_Fortress.png" />
-    <Resource Include="Res\BuildingImages\militaryBuilding_Prison.png" />
-    <Resource Include="Res\BuildingImages\militaryBuilding_Watchtower.png" />
-    <Resource Include="Res\BuildingImages\nobleBuilding_Castle.png" />
-    <Resource Include="Res\BuildingImages\nobleBuilding_Manor.png" />
-    <Resource Include="Res\BuildingImages\nobleBuilding_Palace.png" />
-    <Resource Include="Res\BuildingImages\religiousBuilding_Cathedral.png" />
-    <Resource Include="Res\BuildingImages\religiousBuilding_Church.png" />
-    <Resource Include="Res\BuildingImages\religiousBuilding_Monastery.png" />
-    <Resource Include="Res\BuildingImages\religiousBuilding_Temple.png" />
-    <Resource Include="Res\BuildingImages\specialBuilding_Cemetery.png" />
-    <Resource Include="Res\BuildingImages\specialBuilding_DragonGate.png" />
-    <Resource Include="Res\BuildingImages\specialBuilding_Fortress.png" />
-    <Resource Include="Res\BuildingImages\specialBuilding_GhostTown.png" />
-    <Resource Include="Res\BuildingImages\specialBuilding_Laboratory.png" />
-    <Resource Include="Res\BuildingImages\specialBuilding_Library.png" />
-    <Resource Include="Res\BuildingImages\specialBuilding_MagicSchool.png" />
-    <Resource Include="Res\BuildingImages\specialBuilding_Observatory.png" />
-    <Resource Include="Res\BuildingImages\specialBuilding_Smithy.png" />
-    <Resource Include="Res\BuildingImages\specialBuilding_University.png" />
-    <Resource Include="Res\BuildingImages\specialBuilding_Wall.png" />
-    <Resource Include="Res\BuildingImages\tradeBuilding_Harbour.png" />
-    <Resource Include="Res\BuildingImages\tradeBuilding_Market.png" />
-    <Resource Include="Res\BuildingImages\tradeBuilding_Pub.png" />
-    <Resource Include="Res\BuildingImages\tradeBuilding_Townhouse.png" />
-    <Resource Include="Res\BuildingImages\tradeBuilding_TradingPost.png" />
-    <Resource Include="Res\BuildingImages\tradeBuilding_Wharf.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Res\HeroImages\hero_1_Assassin.png" />
-    <Resource Include="Res\HeroImages\hero_2_Thief.png" />
-    <Resource Include="Res\HeroImages\hero_3_Magician.png" />
-    <Resource Include="Res\HeroImages\hero_4_King.png" />
-    <Resource Include="Res\HeroImages\hero_5_Bishop.png" />
-    <Resource Include="Res\HeroImages\hero_6_Merchant.png" />
-    <Resource Include="Res\HeroImages\hero_7_Architect.png" />
-    <Resource Include="Res\HeroImages\hero_8_ Warlord.png" />
-    <Resource Include="Res\HeroImages\hero_Back.png" />
+    <Folder Include="Res\BuildingImages\" />
+    <Folder Include="Res\HeroImages\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
