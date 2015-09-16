@@ -5,7 +5,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CitadelsServer
+namespace CitadelsServer.Datas
 {
     public  class GameDataCenter
     { 
@@ -38,10 +38,26 @@ namespace CitadelsServer
                 _roomNum = value;
             }
         }
+        //生成房间号与游戏数据的对应
+        Dictionary<int, GameRoomData> _roomDataDic;
+        public Dictionary<int, GameRoomData> RoomDataDic
+        {
+            get
+            {
+                return _roomDataDic;
+            }
+
+            set
+            {
+                _roomDataDic = value;
+            }
+        }
 
         public GameDataCenter()
         {
+            RoomNum = 0;
             RoomSeatSockets = new Dictionary<int, List<Socket>>();
+            RoomDataDic = new Dictionary<int, GameRoomData>();
         }
     }
 }

@@ -69,12 +69,22 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Buildings\Building.cs" />
+    <Compile Include="Buildings\MilitaryBuilding.cs" />
+    <Compile Include="Buildings\NobleBuilding.cs" />
+    <Compile Include="Buildings\ReligiousBuilding.cs" />
+    <Compile Include="Buildings\SpecialBuilding.cs" />
+    <Compile Include="Buildings\TradeBuilding.cs" />
     <Compile Include="ConverterIpToString.cs" />
     <Compile Include="DataCtrls\DataCtrl.cs" />
-    <Compile Include="GameDataCenter.cs" />
+    <Compile Include="Datas\CardRes.cs" />
+    <Compile Include="Datas\GameDataCenter.cs" />
+    <Compile Include="Datas\GameRoomData.cs" />
+    <Compile Include="Datas\PlayerData.cs" />
     <Compile Include="GameUser.cs" />
     <Compile Include="DataCtrls\GameDataCtrl.cs" />
     <Compile Include="DataCtrls\InfoDataCtrl.cs" />
+    <Compile Include="Heros\Hero.cs" />
     <Compile Include="MySQLCtrl.cs" />
     <Compile Include="NetCtrl.cs" />
     <Compile Include="NotificationObject.cs" />
@@ -121,8 +131,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Buildings\" />
-    <Folder Include="Heros\" />
     <Folder Include="Res\BuildingImages\" />
     <Folder Include="Res\HeroImages\" />
   </ItemGroup>

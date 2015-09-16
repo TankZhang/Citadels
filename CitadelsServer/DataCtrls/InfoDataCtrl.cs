@@ -5,7 +5,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using CitadelsServer.DataCtrls;
-
+using CitadelsServer.Datas;
 namespace CitadelsServer.DataCtrls
 {
    public static class InfoDataCtrl
