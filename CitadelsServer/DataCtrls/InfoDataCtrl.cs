@@ -20,14 +20,14 @@ namespace CitadelsServer.DataCtrls
                 case '0':
                     string[] infos = DataCtrl.SegmentData(infoStr.Substring(1));
                     if (mySQLCtrl.IsExistInDb(infos[0]))
-                    { gameuser.Status = "注册邮箱已存在";Console.WriteLine(gameuser.Status); return gameuser; }
+                    { gameuser.Status = "注册邮箱已存在"; return gameuser; }
                      RegisterDeal(mySQLCtrl, socket, infos, out gameuser); 
                     return gameuser;
                 //收到登陆数据
                 case '1':
                     string[] loadInfo = DataCtrl.SegmentData(infoStr.Substring(1));
                     if (!mySQLCtrl.IsExistInDb(loadInfo[0]))
-                    { gameuser.Status = "注册邮箱不存在"; Console.WriteLine(gameuser.Status); return gameuser; }
+                    { gameuser.Status = "登录邮箱未注册"; return gameuser; }
                     SignDeal(mySQLCtrl, socket, loadInfo, out gameuser);
                     return gameuser;
                 default: return null;
@@ -72,39 +72,38 @@ namespace CitadelsServer.DataCtrls
         /// <param name="socket">对应的客户端socket</param>
         /// <param name="roomStr">对应的接收到的房间数据</param>
         /// <returns>成功返回true，否则返回false</returns>
-        public static bool RoomDataDeal(ref Dictionary<int, List<Socket>> roomSeatSockets, ref int roomNum, Socket socket, string roomStr)
+        public static string RoomDataDeal(GameDataCenter gameDataCenter, Socket socket, string roomStr)
         {
             switch (roomStr[0])
             {
                 //创建房间的信息，房间号++，建立socket的list，加入当前socket，将当前list加入dic，如果对应的房间号的list包含此socket，返回true，否则，返回false。
                 case '0':
-                    roomNum++;
+                    gameDataCenter.RoomNum++;
                     List<Socket> l = new List<Socket>();
                     l.Add(socket);
-                    roomSeatSockets.Add(roomNum, l);
-                    if (roomSeatSockets[roomNum].Contains(socket))
+                    gameDataCenter.RoomSeatSockets.Add(gameDataCenter.RoomNum, l);
+                    if (gameDataCenter.RoomSeatSockets[gameDataCenter.RoomNum].Contains(socket))
                     {
-                        Console.WriteLine("创建房间成功"); return true;
+                        return "10" + gameDataCenter.RoomNum.ToString() + "|" + gameDataCenter.RoomSeatSockets[gameDataCenter.RoomNum].Count.ToString();
                     }
                     else
                     {
-                        Console.WriteLine("创建房间失败");
-                        roomNum--;
-                        return false;
+                       
+                        gameDataCenter.RoomNum--;
+                        return "创建失败";
                     }
                 //加入房间的信息，先取得房间号i,判断房间号i存在否，存在则将此socket加入list，如果此list含此socket，返回true。
                 case '1':
                     int i;
                     int.TryParse(roomStr.Substring(1), out i);
-                    if (!roomSeatSockets.Keys.Contains(i)) { Console.WriteLine("不存在此房间"); return false; }
-                    roomSeatSockets[i].Add(socket);
-                    if (roomSeatSockets[i].Contains(socket))
-                    { return true; }
+                    if (!gameDataCenter.RoomSeatSockets.Keys.Contains(i)) { return "加入失败"; }
+                    gameDataCenter.RoomSeatSockets[i].Add(socket);
+                    if (gameDataCenter.RoomSeatSockets[i].Contains(socket))
+                    { return "10" + gameDataCenter.RoomNum.ToString() + "|" + gameDataCenter.RoomSeatSockets[gameDataCenter.RoomNum].Count.ToString(); }
                     else
-                    { return false; }
-                default: break;
+                    { return "加入失败"; }
+                default: return "未知错误";
             }
-            return false;
         }
     }
 }

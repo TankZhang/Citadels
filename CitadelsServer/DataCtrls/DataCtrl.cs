@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,6 +9,24 @@ namespace CitadelsServer.DataCtrls
 {
     public static class DataCtrl
     {
+        //处理客户端传过来的所有信息
+        public static void DealData(GameDataCenter gameDataCenter,Socket socket,string str)
+        {
+            switch (str[0])
+            {
+                //处理登陆注册信息
+                case '0':
+                    GameUser gameuser = InfoDataCtrl.InfoDataDeal(App.viewModel.MySQLCtrl, socket, str.Substring(1));
+                    Console.WriteLine(gameuser.Status);
+                    break;
+                //处理房间座位信息
+                case '1':
+                    string roomStatus = InfoDataCtrl.RoomDataDeal(gameDataCenter, socket, str.Substring(1));
+                    Console.WriteLine(roomStatus);
+                    break;
+                default: Console.WriteLine("接收到错误信息"); break;
+            }
+        }
 
         //分割字符串
         public static string[] SegmentData(string str)

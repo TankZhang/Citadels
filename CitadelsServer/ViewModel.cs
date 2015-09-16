@@ -9,8 +9,9 @@ namespace CitadelsServer
 {
     public class ViewModel
     {
-        public MySQLCtrl mySQLCtrl;
-        public NetCtrl netCtrl;
+        public MySQLCtrl MySQLCtrl;
+        public NetCtrl NetCtrl;
+        public GameDataCenter GameDataCenter;
         private ObservableCollection<ServerIp> _ips;
         public ObservableCollection<ServerIp> Ips
         {
@@ -26,8 +27,9 @@ namespace CitadelsServer
         }
         public ViewModel()
         {
-            netCtrl = new NetCtrl();
-            mySQLCtrl = new MySQLCtrl();
+            NetCtrl = new NetCtrl();
+            MySQLCtrl = new MySQLCtrl();
+            GameDataCenter = new GameDataCenter();
             Ips = new ObservableCollection<ServerIp>();
             foreach (var item in NetCtrl.GetLocalIP())
             {

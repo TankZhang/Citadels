@@ -30,7 +30,7 @@ namespace CitadelsServer
         private void btnStartServer_Click(object sender, RoutedEventArgs e)
         {
             ServerIp sip = cmboxIP.SelectedItem as ServerIp;
-            App.viewModel.netCtrl = new NetCtrl(sip.Ip.ToString(), tbxPort.Text);
+            App.viewModel.NetCtrl = new NetCtrl(sip.Ip.ToString(), tbxPort.Text);
             gridStartSuccess.Visibility = Visibility.Visible;
             gridStartWin.Visibility = Visibility.Collapsed;
         }

@@ -71,6 +71,7 @@
     </ApplicationDefinition>
     <Compile Include="ConverterIpToString.cs" />
     <Compile Include="DataCtrls\DataCtrl.cs" />
+    <Compile Include="GameDataCenter.cs" />
     <Compile Include="GameUser.cs" />
     <Compile Include="DataCtrls\GameDataCtrl.cs" />
     <Compile Include="DataCtrls\InfoDataCtrl.cs" />
@@ -120,6 +121,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Buildings\" />
     <Folder Include="Heros\" />
     <Folder Include="Res\BuildingImages\" />
     <Folder Include="Res\HeroImages\" />
