@@ -180,11 +180,25 @@ namespace CitadelsServer.Datas
                 _role = value;
             }
         }
+        
+        string _nickName;
+        public string NickName
+        {
+            get
+            {
+                return _nickName;
+            }
 
+            set
+            {
+                _nickName = value;
+            }
+        }
 
-        public PlayerData(int seat)
+        public PlayerData(int seat,string nickName)
         {
             Seat = seat;
+            NickName = nickName;
             IsKill = false;
             IsKing = false;
             IsStole = false;

@@ -53,11 +53,26 @@ namespace CitadelsServer.Datas
             }
         }
 
+        Dictionary<string, string> _mailNickDic;
+        public Dictionary<string, string> MailNickDic
+        {
+            get
+            {
+                return _mailNickDic;
+            }
+
+            set
+            {
+                _mailNickDic = value;
+            }
+        }
+
         public GameDataCenter()
         {
             RoomNum = 0;
             RoomSeatSockets = new Dictionary<int, List<Socket>>();
             RoomDataDic = new Dictionary<int, GameRoomData>();
+            MailNickDic = new Dictionary<string, string>();
         }
     }
 }

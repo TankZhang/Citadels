@@ -78,7 +78,7 @@ namespace CitadelsServer.DataCtrls
             string[] strTemp = DataCtrl.SegmentData(roomStr);
             switch (strTemp[0])
             {
-                //创建房间的信息，房间号++，建立socket的list，加入当前socket，将当前list加入dic，如果对应的房间号的list包含此socket，返回true，否则，返回false。
+                //创建房间的信息，房间号++，建立socket的list，加入当前socket，将当前list加入dic，如果对应的房间号的list包含此socket,加入对应的playerdata，返回true，否则，返回false。
                 case "0":
                     gameDataCenter.RoomNum++;
                     List<Socket> l = new List<Socket>();
@@ -86,6 +86,10 @@ namespace CitadelsServer.DataCtrls
                     gameDataCenter.RoomSeatSockets.Add(gameDataCenter.RoomNum, l);
                     if (gameDataCenter.RoomSeatSockets[gameDataCenter.RoomNum].Contains(socket))
                     {
+                        GameRoomData gameRoomData = new GameRoomData();
+                        PlayerData playerData = new PlayerData(1, gameDataCenter.MailNickDic[strTemp[1]]);
+                        gameRoomData.PlayerDataList.Add(playerData);
+                        gameDataCenter.RoomDataDic.Add(gameDataCenter.RoomNum, gameRoomData);
                         return "1|0|1|" + gameDataCenter.RoomNum.ToString() + "|" + gameDataCenter.RoomSeatSockets[gameDataCenter.RoomNum].Count.ToString() + "|";
                     }
                     else
@@ -101,7 +105,10 @@ namespace CitadelsServer.DataCtrls
                     if (!gameDataCenter.RoomSeatSockets.Keys.Contains(i)) { return "1|1|0|加入失败|"; }
                     gameDataCenter.RoomSeatSockets[i].Add(socket);
                     if (gameDataCenter.RoomSeatSockets[i].Contains(socket))
-                    { return "1|1|1|" + i + "|" + gameDataCenter.RoomSeatSockets[i].Count.ToString() + "|"; }
+                    {
+                        PlayerData playerData = new PlayerData(gameDataCenter.RoomSeatSockets[i].Count, gameDataCenter.MailNickDic[strTemp[1]]);
+                        gameDataCenter.RoomDataDic[i].PlayerDataList.Add(playerData);
+                        return "1|1|1|" + i + "|" + gameDataCenter.RoomSeatSockets[i].Count.ToString() + "|"; }
                     else
                     { return "1|1|0|加入失败|"; }
                 default: return "未知错误";
