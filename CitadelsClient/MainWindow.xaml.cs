@@ -31,5 +31,6 @@ namespace CitadelsClient
 
             App.clientNetControl.Send(tbxSend.Text);
         }
+        
     }
 }

@@ -14,5 +14,10 @@ namespace CitadelsClient
     public partial class App : Application
     {
        public static ClientNetControl clientNetControl;
+
+        private void Application_Exit(object sender, ExitEventArgs e)
+        {
+            clientNetControl.SocketClient.Disconnect(false);clientNetControl.SocketClient.Shutdown(System.Net.Sockets.SocketShutdown.Both); clientNetControl.SocketClient.Close();
+        }
     }
 }

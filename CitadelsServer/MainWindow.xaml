@@ -23,6 +23,7 @@
         </Grid>
         <Grid Name="gridStartSuccess" Visibility="Collapsed">
             <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Margin="169,129,0,0" TextWrapping="Wrap" Text="开启成功" VerticalAlignment="Top" Height="80" Width="164"/>
+            <Button x:Name="btnTesta" Content="Test" HorizontalAlignment="Left" Margin="341,263,0,0" VerticalAlignment="Top" Width="65" Height="23" Click="btnTest_Click"/>
         </Grid>
     </Grid>
 </Window>

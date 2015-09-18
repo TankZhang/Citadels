@@ -43,7 +43,6 @@ namespace CitadelsServer
 
         private void btnTest_Click(object sender, RoutedEventArgs e)
         {
-
         }
     }
 }

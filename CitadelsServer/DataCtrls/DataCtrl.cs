@@ -12,16 +12,17 @@ namespace CitadelsServer.DataCtrls
         //处理客户端传过来的所有信息
         public static void DealData(GameDataCenter gameDataCenter,Socket socket,string str)
         {
-            switch (str[0])
+            string[] strTemp = SegmentData(str);
+            switch (strTemp[0])
             {
                 //处理登陆注册信息
-                case '0':
-                    GameUser gameuser = InfoDataCtrl.InfoDataDeal(App.viewModel.MySQLCtrl, socket, str.Substring(1));
+                case "0":
+                    GameUser gameuser = InfoDataCtrl.InfoDataDeal(App.viewModel.MySQLCtrl, socket, str.Substring(2));
                     Console.WriteLine(gameuser.Status);
                     break;
                 //处理房间座位信息
-                case '1':
-                    string roomStatus = InfoDataCtrl.RoomDataDeal(gameDataCenter, socket, str.Substring(1));
+                case "1":
+                    string roomStatus = InfoDataCtrl.RoomDataDeal(gameDataCenter, socket, str.Substring(2));
                     Console.WriteLine(roomStatus);
                     break;
                 default: Console.WriteLine("接收到错误信息"); break;

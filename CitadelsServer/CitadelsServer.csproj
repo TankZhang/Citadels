@@ -82,7 +82,6 @@
     <Compile Include="Datas\GameRoomData.cs" />
     <Compile Include="Datas\PlayerData.cs" />
     <Compile Include="GameUser.cs" />
-    <Compile Include="DataCtrls\GameDataCtrl.cs" />
     <Compile Include="DataCtrls\InfoDataCtrl.cs" />
     <Compile Include="Heros\Hero.cs" />
     <Compile Include="MySQLCtrl.cs" />
