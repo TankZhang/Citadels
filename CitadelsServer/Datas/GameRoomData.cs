@@ -79,17 +79,17 @@ namespace CitadelsServer.Datas
             }
         }
 
-        List<PlayerData> _playerDataList;
-        public List<PlayerData> PlayerDataList
+        Dictionary<int,PlayerData> _playerDataDic;
+        public Dictionary<int,PlayerData> PlayerDataDic
         {
             get
             {
-                return _playerDataList;
+                return _playerDataDic;
             }
 
             set
             {
-                _playerDataList = value;
+                _playerDataDic = value;
             }
         }
 
@@ -101,7 +101,7 @@ namespace CitadelsServer.Datas
             BackHeros = cardRes.Heros;
             TableHeros = new List<Hero>();
             HeroToPlayer = new Dictionary<int, int>();
-            PlayerDataList = new List<PlayerData>();
+            PlayerDataDic = new Dictionary<int, PlayerData>();
         }
     }
 }

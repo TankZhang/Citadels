@@ -96,17 +96,19 @@ namespace CitadelsServer
         /// </summary>
         /// <param name="socket"></param>
         /// <param name="str"></param>
-       public static void Send(Socket socket, string str)
+       public static bool Send(Socket socket, string str)
         {
             try
             {
                 byte[] buffer = Encoding.UTF8.GetBytes(str);
                 socket.Send(buffer);
+                return socket.Connected;
             }
             catch (Exception ex)
             {
                 //抛出异常信息
                 Console.WriteLine(ex.Message.ToString());
+                return false;
             }
         }
         //构造函数

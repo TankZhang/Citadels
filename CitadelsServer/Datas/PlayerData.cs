@@ -3,6 +3,7 @@ using CitadelsServer.Heros;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -195,10 +196,40 @@ namespace CitadelsServer.Datas
             }
         }
 
-        public PlayerData(int seat,string nickName)
+        string _mail;
+        public string Mail
         {
+            get
+            {
+                return _mail;
+            }
+
+            set
+            {
+                _mail = value;
+            }
+        }
+
+        Socket _socket;
+        public Socket Socket
+        {
+            get
+            {
+                return _socket;
+            }
+
+            set
+            {
+                _socket = value;
+            }
+        }
+
+        public PlayerData(int seat,string nickName,string mail,Socket s)
+        {
+            Socket = s;
             Seat = seat;
             NickName = nickName;
+            Mail = mail;
             IsKill = false;
             IsKing = false;
             IsStole = false;

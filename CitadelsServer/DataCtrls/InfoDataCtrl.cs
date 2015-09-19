@@ -80,15 +80,21 @@ namespace CitadelsServer.DataCtrls
             {
                 //创建房间的信息，房间号++，建立socket的list，加入当前socket，将当前list加入dic，如果对应的房间号的list包含此socket,加入对应的playerdata，返回true，否则，返回false。
                 case "0":
-                    gameDataCenter.RoomNum++;
+                    int roomNum = 1;
+                    while(gameDataCenter.RoomDataDic.Keys.Contains(roomNum))
+                    {
+                        roomNum++;
+                    }
+                    gameDataCenter.RoomNum= roomNum;
                     List<Socket> l = new List<Socket>();
                     l.Add(socket);
                     gameDataCenter.RoomSeatSockets.Add(gameDataCenter.RoomNum, l);
                     if (gameDataCenter.RoomSeatSockets[gameDataCenter.RoomNum].Contains(socket))
                     {
                         GameRoomData gameRoomData = new GameRoomData();
-                        PlayerData playerData = new PlayerData(1, gameDataCenter.MailNickDic[strTemp[1]]);
-                        gameRoomData.PlayerDataList.Add(playerData);
+                        PlayerData playerData = new PlayerData(1, gameDataCenter.MailNickDic[strTemp[1]],strTemp[1],socket);
+                        playerData.IsKing = true;
+                        gameRoomData.PlayerDataDic.Add(1,playerData);
                         gameDataCenter.RoomDataDic.Add(gameDataCenter.RoomNum, gameRoomData);
                         return "1|0|1|" + gameDataCenter.RoomNum.ToString() + "|" + gameDataCenter.RoomSeatSockets[gameDataCenter.RoomNum].Count.ToString() + "|";
                     }
@@ -106,8 +112,8 @@ namespace CitadelsServer.DataCtrls
                     gameDataCenter.RoomSeatSockets[i].Add(socket);
                     if (gameDataCenter.RoomSeatSockets[i].Contains(socket))
                     {
-                        PlayerData playerData = new PlayerData(gameDataCenter.RoomSeatSockets[i].Count, gameDataCenter.MailNickDic[strTemp[1]]);
-                        gameDataCenter.RoomDataDic[i].PlayerDataList.Add(playerData);
+                        PlayerData playerData = new PlayerData(gameDataCenter.RoomSeatSockets[i].Count, gameDataCenter.MailNickDic[strTemp[1]], strTemp[1],socket);
+                        gameDataCenter.RoomDataDic[i].PlayerDataDic.Add(gameDataCenter.RoomDataDic[i].PlayerDataDic.Count+1, playerData);
                         return "1|1|1|" + i + "|" + gameDataCenter.RoomSeatSockets[i].Count.ToString() + "|"; }
                     else
                     { return "1|1|0|加入失败|"; }
