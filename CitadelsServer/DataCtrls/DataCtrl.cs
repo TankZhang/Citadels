@@ -43,6 +43,7 @@ namespace CitadelsServer.DataCtrls
                 default: Console.WriteLine("接收到错误信息"); break;
             }
         }
+
         //所有的游戏数据的处理
         private static void DealGameData(GameDataCenter gameDataCenter, string str)
         {
@@ -60,6 +61,7 @@ namespace CitadelsServer.DataCtrls
                 default: return;
             }
         }
+
         //对选择建筑的处理
         private static void DealSelectBuilding(GameDataCenter gameDataCenter, string[] gameStrs)
         {
@@ -67,7 +69,9 @@ namespace CitadelsServer.DataCtrls
             {
                 //对纳入囊中的处理
                 case "0": DealSelectBuildingToMe(gameDataCenter, gameStrs); break;
+                //对进行建筑的处理
                 case "1": DealSelectBuildingToBuild(gameDataCenter, gameStrs); break;
+                //对拆牌建筑的处理
                 case "2": DealSelectBuildingToBreak(gameDataCenter, gameStrs); break;
                 default: return;
             }

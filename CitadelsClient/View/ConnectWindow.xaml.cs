@@ -23,14 +23,14 @@ namespace CitadelsClient
         public MainWindow()
         {
             InitializeComponent();
-            App.clientNetControl = new ClientNetControl("192.168.1.102", "31313");
         }
 
-        private void btn_Click(object sender, RoutedEventArgs e)
+        private void Window_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-
-            App.clientNetControl.Send(tbxSend.Text);
+            if ((bool)e.NewValue == false)
+            {
+                Close();
+            }
         }
-        
     }
 }
