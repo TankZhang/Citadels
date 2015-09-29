@@ -114,8 +114,11 @@ namespace CitadelsClient.ViewModel
                         break;
                     }
                     string str = Encoding.UTF8.GetString(buffer, 0, r);
+                    //如果收到登陆成功的消息，关闭本窗口，并return该线程
                     if (str == "0|1|1|")
                     {
+                        App.userInfo = new UserInfo();
+                        App.userInfo = UserInfo;
                         IsEnable = false;
                         return;
                     }

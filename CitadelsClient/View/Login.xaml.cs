@@ -50,8 +50,11 @@ namespace CitadelsClient.View
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            LobbyWin lobbyWin = new LobbyWin();
-            lobbyWin.Show();
+            if (IsEnabled == false)
+            {
+                LobbyWin lobbyWin = new LobbyWin();
+                lobbyWin.Show();
+            }
         }
     }
 }

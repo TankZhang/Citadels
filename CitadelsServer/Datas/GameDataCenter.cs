@@ -52,7 +52,7 @@ namespace CitadelsServer.Datas
                 _roomDataDic = value;
             }
         }
-
+        //玩家邮箱与昵称对应的字典
         Dictionary<string, string> _mailNickDic;
         public Dictionary<string, string> MailNickDic
         {
@@ -66,6 +66,20 @@ namespace CitadelsServer.Datas
                 _mailNickDic = value;
             }
         }
+        //在大厅中的玩家socket列表
+        List<Socket> _lobbySocketList;
+        public List<Socket> LobbySocketList
+        {
+            get
+            {
+                return _lobbySocketList;
+            }
+
+            set
+            {
+                _lobbySocketList = value;
+            }
+        }
 
         public GameDataCenter()
         {
@@ -73,6 +87,7 @@ namespace CitadelsServer.Datas
             RoomSeatSockets = new Dictionary<int, List<Socket>>();
             RoomDataDic = new Dictionary<int, GameRoomData>();
             MailNickDic = new Dictionary<string, string>();
+            LobbySocketList = new List<Socket>();
         }
     }
 }

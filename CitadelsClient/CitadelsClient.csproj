@@ -64,8 +64,10 @@
     <Compile Include="Model\GameRoomData.cs" />
     <Compile Include="Model\Heros\Hero.cs" />
     <Compile Include="Model\PlayerData.cs" />
+    <Compile Include="Model\RoomInfo.cs" />
     <Compile Include="Model\UserInfo.cs" />
     <Compile Include="PasswordBoxBindingHelper.cs" />
+    <Compile Include="ViewModel\LobbyVM.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\SignVM.cs" />
     <Compile Include="View\LobbyWin.xaml.cs">

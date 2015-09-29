@@ -22,7 +22,9 @@ namespace CitadelsServer.DataCtrls
                     string[] infos = DataCtrl.SegmentData(infoStr.Substring(2));
                     if (mySQLCtrl.IsExistInDb(infos[0]))
                     { gameuser.Status = "0|0|0|注册邮箱已存在|"; return gameuser; }
-                     RegisterDeal(mySQLCtrl, socket, infos, out gameuser); 
+                    if (mySQLCtrl.IsNickNameExistInDb(infos[1]))
+                    { gameuser.Status = "0|0|0|注册昵称已存在|"; return gameuser; }
+                    RegisterDeal(mySQLCtrl, socket, infos, out gameuser); 
                     return gameuser;
                 //收到登陆数据
                 case "1":
@@ -117,7 +119,41 @@ namespace CitadelsServer.DataCtrls
                         return "1|1|1|" + i + "|" + gameDataCenter.RoomSeatSockets[i].Count.ToString() + "|"; }
                     else
                     { return "1|1|0|加入失败|"; }
+                //更新房间信息
+                case "2":
+                    string strRoomDataUpdate = RoomDataUpdate(gameDataCenter, socket, strTemp);
+                    return strRoomDataUpdate;
+
+                    //将这个socket加入到大厅玩家列表中
+                    gameDataCenter.LobbySocketList.Add(socket);
+                    string str = "1|4|";
+                    foreach (var item in gameDataCenter.RoomDataDic)
+                    {
+                        str += (item.Key + "|");
+                        str += (item.Value.PlayerDataDic.Count + "|");
+                        str += (item.Value.PlayerDataDic[1].NickName + "|");
+                    }
+                    return str;
                 default: return "未知错误";
+
+            }
+        }
+        //处理更新房间信息的请求
+        private static string RoomDataUpdate(GameDataCenter gameDataCenter, Socket socket, string[] strTemp)
+        {
+            switch(strTemp[1])
+            {
+                case "0":
+                    gameDataCenter.LobbySocketList.Add(socket);
+                    string str = "1|4|";
+                    foreach (var item in gameDataCenter.RoomDataDic)
+                    {
+                        str += (item.Key + "|");
+                        str += (item.Value.PlayerDataDic.Count + "|");
+                        str += (item.Value.PlayerDataDic[1].NickName + "|");
+                    }
+                    return str;
+                default:return;
             }
         }
     }

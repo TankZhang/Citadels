@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CitadelsClient.Model;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -14,7 +15,7 @@ namespace CitadelsClient
     public partial class App : Application
     {
        public static ClientNetControl clientNetControl;
-
+        public static UserInfo userInfo;
         private void Application_Exit(object sender, ExitEventArgs e)
         {
             clientNetControl.SocketClient.Disconnect(false);clientNetControl.SocketClient.Shutdown(System.Net.Sockets.SocketShutdown.Both); clientNetControl.SocketClient.Close();

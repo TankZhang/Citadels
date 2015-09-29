@@ -20,21 +20,30 @@ namespace CitadelsServer.DataCtrls
                 //处理登陆注册信息
                 case "0":
                     GameUser gameuser = InfoDataCtrl.InfoDataDeal(App.viewModel.MySQLCtrl, socket, str.Substring(2));
+                    if (gameuser.Status == "0|1|1|")
+                    {
+                        if (gameDataCenter.MailNickDic.Keys.Contains(gameuser.Mail))
+                        { gameuser.Status = "0|1|0|您的账户已经登陆|"; }
+                        else
+                        {
+                            gameDataCenter.MailNickDic.Add(gameuser.Mail, gameuser.NickName);
+                        }
+                    }
                     NetCtrl.Send(socket, gameuser.Status);
-                    gameDataCenter.MailNickDic.Add(gameuser.Mail, gameuser.NickName);
-                    Console.WriteLine(gameuser.Status);
                     break;
                 //处理房间座位信息
                 case "1":
                     string roomStatus = InfoDataCtrl.RoomDataDeal(gameDataCenter, socket, str.Substring(2));
                     NetCtrl.Send(socket, roomStatus);
-                    Console.WriteLine(roomStatus);
                     int roomToStart = 0;
-                    if (IsStartEnable(gameDataCenter, socket, roomStatus, ref roomToStart))
+                    if (roomStatus.Substring(2)[0] == '1')
                     {
-                        NetCtrl.Send(gameDataCenter.RoomSeatSockets[roomToStart][0], "1|2|");
-                        Console.WriteLine(roomToStart + "号房间可以开始了");
+                        if (IsStartEnable(gameDataCenter, socket, roomStatus, ref roomToStart))
+                        {
+                            NetCtrl.Send(gameDataCenter.RoomSeatSockets[roomToStart][0], "1|2|");
+                        }
                     }
+
                     break;
                 //处理游戏中的数据
                 case "2":

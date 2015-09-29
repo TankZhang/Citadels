@@ -3,11 +3,33 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:CitadelsClient.View"
+        xmlns:localV="clr-namespace:CitadelsClient.View"
+        xmlns:localVM="clr-namespace:CitadelsClient.ViewModel"
         mc:Ignorable="d"
-        Title="LobbyWin" Height="300" Width="300"
+        Title="LobbyWin" Height="300" Width="500"
         WindowStartupLocation="CenterScreen">
+    <Window.DataContext>
+        <localVM:LobbyVM x:Name="lobbyVm"></localVM:LobbyVM>
+    </Window.DataContext>
     <Grid>
-        
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <ListView Name="listView" ItemsSource="{Binding}" Grid.Column="0" Margin="0"  SelectedIndex="{Binding ElementName=lobbyVm, Path=Index}" >
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="房间号" DisplayMemberBinding="{Binding Id}" Width="40"/>
+                        <GridViewColumn Header="人数" DisplayMemberBinding="{Binding Num}" Width="50"/>
+                        <GridViewColumn Header="创建人" DisplayMemberBinding="{Binding NickNameList[0]}" Width="125"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <Button x:Name="button" Content="加一行" Grid.Column="1" HorizontalAlignment="Left" Margin="112,102,0,0" VerticalAlignment="Top" Width="75" Click="button_Click" />
+            <Button x:Name="btnJoin" Content="加入房间" Command="{Binding BtnJoin}" IsEnabled="{Binding CanJoin}" Grid.Column="1" HorizontalAlignment="Left" Margin="10,198,0,0" VerticalAlignment="Top" Width="75"/>
+            <TextBox x:Name="textBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="83,74,0,0" TextWrapping="Wrap" Text="{Binding Index, Mode=TwoWay}" VerticalAlignment="Top" Width="120"/>
+            <Button x:Name="btnCreate" Content="创建房间" Command="{Binding BtnCreate}" Grid.Column="1" HorizontalAlignment="Left" Margin="90,198,0,0" VerticalAlignment="Top" Width="75"/>
+        </Grid>
     </Grid>
 </Window>

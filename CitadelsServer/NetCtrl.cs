@@ -81,7 +81,7 @@ namespace CitadelsServer
                     if (r == 0)
                     { break; }
                     string str = Encoding.UTF8.GetString(buffer, 0, r);
-                    Console.WriteLine(str);
+                    Console.WriteLine("收到了："+str);
                     DataCtrl.DealData(App.viewModel.GameDataCenter, socketSend, str);
                         }
                 catch (Exception ex)
@@ -98,6 +98,7 @@ namespace CitadelsServer
         /// <param name="str"></param>
        public static bool Send(Socket socket, string str)
         {
+            Console.WriteLine("发送了：" + str);
             try
             {
                 byte[] buffer = Encoding.UTF8.GetBytes(str);

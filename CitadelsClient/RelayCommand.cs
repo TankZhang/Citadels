@@ -9,7 +9,14 @@ namespace CitadelsClient
 {
    public class RelayCommand:ICommand
     {
+        private Action action;
         private Action<object> _action;
+
+        public RelayCommand(Action action)
+        {
+            this.action = action;
+        }
+
         public RelayCommand(Action<object> action)
         {
             _action = action;
@@ -26,6 +33,10 @@ namespace CitadelsClient
             if (parameter != null)
             {
                 _action(parameter);
+            }
+            else
+            {
+                action();
             }
         }
     }

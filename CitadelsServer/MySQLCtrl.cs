@@ -107,5 +107,18 @@ namespace CitadelsServer
                 return false;
             }
         }
+        //看nickName是否存在
+        public bool IsNickNameExistInDb(string nickName)
+        {
+            MySqlCmd = new MySqlCommand(String.Format("select count(*) from GameUser where GameUser_Nickname='{0}'", nickName), MySqlConnection);
+            if (Convert.ToInt32(MySqlCmd.ExecuteScalar()) > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }
