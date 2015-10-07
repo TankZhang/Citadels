@@ -98,7 +98,11 @@ namespace CitadelsServer.DataCtrls
                         playerData.IsKing = true;
                         gameRoomData.PlayerDataDic.Add(1,playerData);
                         gameDataCenter.RoomDataDic.Add(gameDataCenter.RoomNum, gameRoomData);
+                        //更新所有的在大厅中的人的信息，同时更新特定房间的人的信息
+                        RoomDataPushAll(gameDataCenter);
+                        RoomDataPush(gameDataCenter, roomNum);
                         return "1|0|1|" + gameDataCenter.RoomNum.ToString() + "|" + gameDataCenter.RoomSeatSockets[gameDataCenter.RoomNum].Count.ToString() + "|";
+
                     }
                     else
                     {
@@ -116,6 +120,9 @@ namespace CitadelsServer.DataCtrls
                     {
                         PlayerData playerData = new PlayerData(gameDataCenter.RoomSeatSockets[i].Count, gameDataCenter.MailNickDic[strTemp[1]], strTemp[1],socket);
                         gameDataCenter.RoomDataDic[i].PlayerDataDic.Add(gameDataCenter.RoomDataDic[i].PlayerDataDic.Count+1, playerData);
+                        //更新所有的在大厅中的人的信息，同时更新特定房间的人的信息
+                        RoomDataPushAll(gameDataCenter);
+                        RoomDataPush(gameDataCenter, i);
                         return "1|1|1|" + i + "|" + gameDataCenter.RoomSeatSockets[i].Count.ToString() + "|"; }
                     else
                     { return "1|1|0|加入失败|"; }
@@ -124,16 +131,6 @@ namespace CitadelsServer.DataCtrls
                     string strRoomDataUpdate = RoomDataUpdate(gameDataCenter, socket, strTemp);
                     return strRoomDataUpdate;
 
-                    //将这个socket加入到大厅玩家列表中
-                    gameDataCenter.LobbySocketList.Add(socket);
-                    string str = "1|4|";
-                    foreach (var item in gameDataCenter.RoomDataDic)
-                    {
-                        str += (item.Key + "|");
-                        str += (item.Value.PlayerDataDic.Count + "|");
-                        str += (item.Value.PlayerDataDic[1].NickName + "|");
-                    }
-                    return str;
                 default: return "未知错误";
 
             }
@@ -143,9 +140,10 @@ namespace CitadelsServer.DataCtrls
         {
             switch(strTemp[1])
             {
+                //初次请求更新房间信息
                 case "0":
                     gameDataCenter.LobbySocketList.Add(socket);
-                    string str = "1|4|";
+                    string str = "1|4|0|";
                     foreach (var item in gameDataCenter.RoomDataDic)
                     {
                         str += (item.Key + "|");
@@ -153,8 +151,42 @@ namespace CitadelsServer.DataCtrls
                         str += (item.Value.PlayerDataDic[1].NickName + "|");
                     }
                     return str;
-                default:return;
+                //返回错误信息
+                default:return "1|4|-1|";
             }
+        }
+        //向所有在房间的玩家推送粗略的房间信息
+        static string RoomDataPushAll(GameDataCenter gameDataCenter)
+        {
+            string s = "1|4|0|";
+            foreach (var item in gameDataCenter.RoomDataDic)
+            {
+                s += (item.Key + "|");
+                s += (item.Value.PlayerDataDic.Count + "|");
+                s += (item.Value.PlayerDataDic[1].NickName + "|");
+            }
+            s += "*";
+            foreach (var item in gameDataCenter.LobbySocketList)
+            {
+                NetCtrl.Send(item, s);
+            }
+            return "1";
+        }
+        //向特定房间推送特定的房间详细信息
+        static string RoomDataPush(GameDataCenter gameDataCenter,int roomNumTemp )
+        {
+            string s = "1|4|1|"+roomNumTemp+"|";
+            foreach (var item in gameDataCenter.RoomDataDic[roomNumTemp].PlayerDataDic)
+            {
+                s += (item.Value.Seat + "|");
+                s += (item.Value.NickName + "|");
+            }
+            s += "*";
+            foreach (var item in gameDataCenter.RoomSeatSockets[roomNumTemp])
+            {
+                NetCtrl.Send(item, s);
+            }
+            return "1";
         }
     }
 }

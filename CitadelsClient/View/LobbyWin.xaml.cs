@@ -1,4 +1,5 @@
 ﻿using CitadelsClient.Model;
+using CitadelsClient.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,29 +16,23 @@ using System.Windows.Shapes;
 
 namespace CitadelsClient.View
 {
+
     /// <summary>
     /// LobbyWin.xaml 的交互逻辑
     /// </summary>
     public partial class LobbyWin : Window
     {
+        LobbyVM lobbyVm = new LobbyVM();
         public LobbyWin()
         {
+            this.DataContext = lobbyVm;
             InitializeComponent();
-            listView.DataContext = lobbyVm.RoomInfoList;
+            //listView.DataContext = lobbyVm.RoomInfoList;
         }
 
-        private void button_Click(object sender, RoutedEventArgs e)
+        private void button1_Click(object sender, RoutedEventArgs e)
         {
-            RoomInfo r2 = new RoomInfo();
-            r2.Id = 1;
-            r2.NickNameList.Add("r2s1");
-            r2.Num = 1;
-            r2.NickNameList.Add("r2s2");
-            r2.Num = 1;
-            lobbyVm.RoomInfoList.Add(r2);
-            lobbyVm.RoomInfoList[0].NickNameList.Add("ha");
-            lobbyVm.RoomInfoList[0].Num = 0;
+
         }
-        
     }
 }

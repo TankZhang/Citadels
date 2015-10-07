@@ -8,16 +8,16 @@
         mc:Ignorable="d"
         Title="LobbyWin" Height="300" Width="500"
         WindowStartupLocation="CenterScreen">
-    <Window.DataContext>
+    <!--<Window.DataContext>
         <localVM:LobbyVM x:Name="lobbyVm"></localVM:LobbyVM>
-    </Window.DataContext>
+    </Window.DataContext>-->
     <Grid>
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <ListView Name="listView" ItemsSource="{Binding}" Grid.Column="0" Margin="0"  SelectedIndex="{Binding ElementName=lobbyVm, Path=Index}" >
+            <ListView Name="listView" ItemsSource="{Binding RoomInfoList, Mode=OneWay}" Grid.Column="0" Margin="0"  SelectedIndex="{Binding Index, Mode=OneWayToSource}" >
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="房间号" DisplayMemberBinding="{Binding Id}" Width="40"/>
@@ -26,10 +26,11 @@
                     </GridView>
                 </ListView.View>
             </ListView>
-            <Button x:Name="button" Content="加一行" Grid.Column="1" HorizontalAlignment="Left" Margin="112,102,0,0" VerticalAlignment="Top" Width="75" Click="button_Click" />
+            <Button x:Name="button" Content="加一行" Grid.Column="1" HorizontalAlignment="Left" Margin="112,102,0,0" VerticalAlignment="Top" Width="75" Command="{Binding BtnTest}"  />
             <Button x:Name="btnJoin" Content="加入房间" Command="{Binding BtnJoin}" IsEnabled="{Binding CanJoin}" Grid.Column="1" HorizontalAlignment="Left" Margin="10,198,0,0" VerticalAlignment="Top" Width="75"/>
             <TextBox x:Name="textBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="83,74,0,0" TextWrapping="Wrap" Text="{Binding Index, Mode=TwoWay}" VerticalAlignment="Top" Width="120"/>
             <Button x:Name="btnCreate" Content="创建房间" Command="{Binding BtnCreate}" Grid.Column="1" HorizontalAlignment="Left" Margin="90,198,0,0" VerticalAlignment="Top" Width="75"/>
+            <Button x:Name="button1" Content="暂停" Grid.Column="1" HorizontalAlignment="Left" Margin="170,198,0,0" VerticalAlignment="Top" Width="44" Click="button1_Click"/>
         </Grid>
     </Grid>
 </Window>

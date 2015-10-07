@@ -26,5 +26,10 @@ namespace CitadelsClient.Model
             string[] sss = str.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
             return sss;
         }
+        public static string[] SegmentDataStar(string str)
+        {
+            string[] sss = str.Split(new char[] { '*' }, StringSplitOptions.RemoveEmptyEntries);
+            return sss;
+        }
     }
 }
